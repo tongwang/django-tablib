@@ -4,7 +4,7 @@ from django import get_version
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
-from django.db.models.loading import get_model
+from django.apps import apps
 
 from .base import mimetype_map
 from .datasets import SimpleDataset
@@ -52,7 +52,7 @@ def generic_export(request, model_name=None):
     if model_name not in settings.TABLIB_MODELS:
         raise Http404()
 
-    model = get_model(*model_name.split(".", 2))
+    model = apps.get_model(*model_name.split(".", 2))
     if not model:
         raise ImproperlyConfigured(
             "Model %s is in settings.TABLIB_MODELS but"
