@@ -35,9 +35,9 @@ class TablibAdmin(admin.ModelAdmin):
 
     def get_urls(self):
         try:
-            from django.conf.urls import patterns, url
+            from django.conf.urls import url
         except ImportError:  # Django <1.4
-            from django.conf.urls.defaults import patterns, url
+            from django.conf.urls.defaults import url
 
         def wrap(view):
             def wrapper(*args, **kwargs):
@@ -46,12 +46,11 @@ class TablibAdmin(admin.ModelAdmin):
 
         info = self.model._meta.app_label, self.model._meta.model_name
 
-        urlpatterns = patterns(
-            '',
+        urlpatterns = [
             url(r'^tablib-export/(?P<format>\w+)/$',
                 wrap(self.tablib_export),
                 name='%s_%s_tablib_export' % info),
-        )
+        ]
         urlpatterns += super(TablibAdmin, self).get_urls()
         return urlpatterns
 
