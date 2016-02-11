@@ -78,7 +78,7 @@ class TablibAdmin(admin.ModelAdmin):
                 self.list_editable,
                 self,
             )
-            return cl.get_query_set(request)
+            return cl.get_queryset(request)
         else:
             cl = ChangeList(
                 request,
@@ -93,7 +93,7 @@ class TablibAdmin(admin.ModelAdmin):
                 self.list_editable,
                 self,
             )
-            return cl.get_query_set()
+            return cl.get_queryset()
 
     def changelist_view(self, request, extra_context=None):
         info = self.model._meta.app_label, self.model._meta.model_name
